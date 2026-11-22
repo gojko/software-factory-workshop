@@ -21,6 +21,9 @@ FACTORY_IMAGE_NAME ?= $(shell env -u DOCKER_IMAGE_NAME -u MAKEFLAGS -u MFLAGS \
 	$(MAKE) -pnq --no-print-directory -f $(FACTORY_DIR)/makefile 2>/dev/null \
 	| sed -n 's/^DOCKER_IMAGE_NAME [:?]*= *//p')
 
+DOCKER_BUILDER ?= $(shell docker buildx version > /dev/null 2>&1 && docker context show 2>/dev/null)
+DOCKER_BUILD = docker build $(if $(DOCKER_BUILDER),--builder $(DOCKER_BUILDER)) --platform $(DOCKER_PLATFORM)
+
 help: ## Show the targets and what each one does
 	@awk 'BEGIN { FS = ":.*## " } /^[a-zA-Z_-]+:.*## / { printf "  %-22s %s\n", $$1, $$2 }' $(MAKEFILE_LIST)
 
@@ -32,10 +35,10 @@ update-factory: | $(FACTORY_DIR) ## Pull the newest factory set-up
 
 factory-image: | $(FACTORY_DIR) ## Build the base container image from the factory set-up, with the image name from the factory makefile
 	@test -n "$(FACTORY_IMAGE_NAME)" || { echo "Cannot read DOCKER_IMAGE_NAME from $(FACTORY_DIR)/makefile; set FACTORY_IMAGE_NAME" >&2; exit 1; }
-	docker build --platform $(DOCKER_PLATFORM) -t $(FACTORY_IMAGE_NAME) $(FACTORY_IMAGE_DIR)
+	$(DOCKER_BUILD) -t $(FACTORY_IMAGE_NAME) $(FACTORY_IMAGE_DIR)
 
 docker-image: factory-image ## Build the workshop container image (the factory image plus Chromium) from vm/Dockerfile
-	docker build --platform $(DOCKER_PLATFORM) \
+	$(DOCKER_BUILD) \
 		--build-arg BASE_IMAGE=$(FACTORY_IMAGE_NAME) \
 		-t $(DOCKER_IMAGE_NAME) $(DOCKER_IMAGE_DIR)
 
