@@ -1,0 +1,21 @@
+{
+	"name": "workshop-app",
+	"version": "0.1.0",
+	"description": "A hello world web app for the software factory workshop",
+	"type": "module",
+	"private": true,
+	"license": "MIT",
+	"engines": {
+		"node": ">=22"
+	},
+	"dependencies": {
+		"express": "^5.3.0"
+	},
+	"devDependencies": {
+		"@anthropic-ai/claude-code": "^2.1.325",
+		"@eslint/js": "^10.0.1",
+		"@jest/globals": "^30.5.2",
+		"eslint": "^10.15.0",
+		"jest": "^30.5.2"
+	}
+}

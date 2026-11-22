@@ -1,0 +1,5 @@
+.claude-home/
+*.lock
+.npm
+factory-setup/
+workspace/
