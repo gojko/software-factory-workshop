@@ -10,15 +10,18 @@ const NODE_GLOBALS = Object.fromEntries(
 );
 
 const BROWSER_GLOBALS = Object.fromEntries(
-	['console', 'document', 'fetch', 'window'].map((name) => [name, 'readonly'])
+	[
+		'console', 'document', 'fetch', 'window', 'location', 'history', 'FormData', 'navigator',
+		'Event', 'MouseEvent', 'HTMLElement'
+	].map((name) => [name, 'readonly'])
 );
 
 const TEST_FILES = ['tests/**/*.js', '.claude/workflow/tests/**/*.js'];
-const BROWSER_FILES = ['public/**/*.js'];
+const BROWSER_FILES = ['src/www/**/*.js', 'tests/**/*.css.test.js'];
 
 export default [
 	{
-		ignores: ['node_modules/', 'plans/*.workflow.mjs']
+		ignores: ['node_modules/', 'public/dist/','plans/*.workflow.mjs']
 	},
 	js.configs.recommended,
 	{

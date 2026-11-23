@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Set up</title>
+	<link rel="stylesheet" href="styles.css">
+	<link rel="stylesheet" href="rooms.css">
+</head>
+<body>
+	<main>
+		<h1>Set up</h1>
+		<div class="with-menu">
+			<aside class="section-menu" id="section-menu" aria-label="Sections"></aside>
+			<div class="sections">
+				<section id="hotel-settings" aria-labelledby="hotel-settings-heading">
+					<h2 id="hotel-settings-heading">General</h2>
+					<div class="widget" id="settings-widget"></div>
+				</section>
+				<section id="room-types" aria-labelledby="room-types-heading" hidden>
+					<h2 id="room-types-heading">Room types</h2>
+					<div class="widget" id="room-types-widget"></div>
+				</section>
+				<section id="room-ranges" aria-labelledby="room-ranges-heading" hidden>
+					<h2 id="room-ranges-heading">Room ranges</h2>
+					<div class="widget" id="room-ranges-widget"></div>
+				</section>
+			</div>
+		</div>
+	</main>
+	<script type="module" src="/dist/rooms.js"></script>
+</body>
+</html>

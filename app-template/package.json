@@ -15,7 +15,9 @@
 		"@anthropic-ai/claude-code": "^2.1.325",
 		"@eslint/js": "^10.0.1",
 		"@jest/globals": "^30.5.2",
+		"esbuild": "^0.28.2",
 		"eslint": "^10.15.0",
-		"jest": "^30.5.2"
+		"jest": "^30.5.2",
+		"jest-environment-jsdom": "^30.5.2"
 	}
 }

@@ -1,6 +1,8 @@
 import { createApp } from './app.js';
+import { openDatabase } from './db/open-database.js';
 
 const HOST = '0.0.0.0';
+const DEFAULT_DB_FILE = 'data/hotel.db';
 
 const port = Number(process.env.CONTAINER_PORT);
 
@@ -9,6 +11,8 @@ if (!port) {
 	process.exit(1);
 }
 
-createApp().listen(port, HOST, () => {
+const database = openDatabase(process.env.DB_FILE || DEFAULT_DB_FILE);
+
+createApp(database).listen(port, HOST, () => {
 	console.log(`The app is running on port ${port}`);
 });

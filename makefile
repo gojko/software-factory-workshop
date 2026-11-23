@@ -73,7 +73,7 @@ init: docker-image | $(FACTORY_DIR) $(TEMPLATE_DIR) ## Build the image, then syn
 				git -C $(WORKSPACE_DIR) config user.email '$(GIT_USER_EMAIL)'; \
 			fi && \
 			rsync -a $(RSYNC_EXCLUDES) $(FACTORY_DEMO_EXCLUDES) $(FACTORY_DIR)/workspace/ $(WORKSPACE_DIR)/ && \
-			rsync -a $(RSYNC_EXCLUDES) $(TEMPLATE_DIR)/ $(WORKSPACE_DIR)/ && \
+			rsync -a $(RSYNC_EXCLUDES) --exclude /.claude/ --exclude /CLAUDE.md $(TEMPLATE_DIR)/ $(WORKSPACE_DIR)/ && \
 			if ! git -C $(WORKSPACE_DIR) rev-parse --verify --quiet HEAD > /dev/null; then \
 				git -C $(WORKSPACE_DIR) add -A && \
 				git -C $(WORKSPACE_DIR) commit -q -m 'Initial workspace'; \
@@ -111,6 +111,11 @@ shell-workspace: | $(WORKSPACE_DIR) ## Open a shell in a container with the work
 clean-workspace: ## Delete the workspace; the factory set-up and the template stay
 	rm -rf $(WORKSPACE_DIR)
 
+update-template: | $(WORKSPACE_DIR) ## Replace the app template with everything committed in the workspace (HEAD), apart from .claude and CLAUDE.md
+	@echo "Snapshotting $$(git -C $(WORKSPACE_DIR) log -1 --format='%h %s') into $(TEMPLATE_DIR)"
+	rm -rf $(TEMPLATE_DIR) && mkdir -p $(TEMPLATE_DIR)
+	git -C $(WORKSPACE_DIR) archive HEAD -- . ':(exclude).claude' ':(exclude)CLAUDE.md' | tar -x -C $(TEMPLATE_DIR)
+
 
 root: ## Open a root shell in the container image, mounting the workspace; useful only for configuring the workshop setup itself. Do not run under regular usage
 	docker run --rm \
@@ -123,4 +128,4 @@ root: ## Open a root shell in the container image, mounting the workspace; usefu
 		-u 0 \
 		-it $(DOCKER_IMAGE_NAME)
 
-.PHONY: help init update-factory factory-image docker-image claude-workspace shell-workspace clean-workspace root
+.PHONY: help init update-factory factory-image docker-image claude-workspace shell-workspace clean-workspace update-template root

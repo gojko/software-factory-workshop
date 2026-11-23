@@ -1,16 +1,54 @@
 :root {
 	color-scheme: light dark;
 	font-family: system-ui, sans-serif;
+	line-height: 1.5;
+	--bg: #ffffff;
+	--text: #1b1f24;
+	--muted: #5a6470;
+	--border: #c4cad2;
+	--surface: #f3f5f8;
+	--accent: #1a5fb4;
+	--accent-text: #ffffff;
+	--danger: #b3261e;
+	--success: #1b6e3c;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--bg: #14171b;
+		--text: #e6e9ed;
+		--muted: #a0a9b4;
+		--border: #3b434c;
+		--surface: #1d2228;
+		--accent: #6ea8fe;
+		--accent-text: #0b1522;
+		--danger: #ff8a80;
+		--success: #6fd29a;
+	}
 }
 
 body {
 	margin: 0;
 	min-height: 100vh;
+	background: var(--bg);
+	color: var(--text);
+}
+
+/* The hello page keeps its centred layout. */
+body:has(#greeting) {
 	display: grid;
 	place-items: center;
 }
 
 main {
+	box-sizing: border-box;
+	width: 100%;
+	max-width: 60rem;
+	margin: 0 auto;
+	padding: 1rem;
+}
+
+main:has(#greeting) {
 	padding: 2rem;
 	text-align: center;
 }
@@ -18,4 +56,145 @@ main {
 h1 {
 	margin: 0 0 0.5rem;
 	font-size: 2.5rem;
+}
+
+h2 {
+	margin: 0 0 0.75rem;
+	font-size: 1.5rem;
+}
+
+/* Navigation bar */
+nav {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.25rem;
+	padding: 0.5rem 1rem;
+	background: var(--surface);
+	border-bottom: 1px solid var(--border);
+}
+
+nav a {
+	padding: 0.4rem 0.8rem;
+	border-radius: 0.3rem;
+	color: var(--accent);
+	text-decoration: none;
+}
+
+nav a.nav-end {
+	margin-left: auto;
+}
+
+nav a:hover {
+	text-decoration: underline;
+}
+
+nav a[aria-current="page"] {
+	background: var(--accent);
+	color: var(--accent-text);
+	font-weight: 600;
+}
+
+/* Forms: labels above inputs on a narrow screen, in a row on a wide one */
+form {
+	display: flex;
+	flex-direction: column;
+	gap: 0.75rem;
+	margin: 1rem 0;
+}
+
+label {
+	display: flex;
+	flex-direction: column;
+	gap: 0.25rem;
+	font-weight: 600;
+}
+
+input,
+select {
+	box-sizing: border-box;
+	width: 100%;
+	padding: 0.5rem;
+	font: inherit;
+	color: var(--text);
+	background: var(--bg);
+	border: 1px solid var(--border);
+	border-radius: 0.3rem;
+}
+
+@media (min-width: 40rem) {
+	form {
+		flex-direction: row;
+		flex-wrap: wrap;
+		align-items: flex-end;
+	}
+
+	label {
+		flex: 1 1 10rem;
+	}
+}
+
+/* Buttons */
+button {
+	padding: 0.5rem 1rem;
+	font: inherit;
+	font-weight: 600;
+	color: var(--accent-text);
+	background: var(--accent);
+	border: 1px solid var(--accent);
+	border-radius: 0.3rem;
+	cursor: pointer;
+}
+
+button:hover {
+	filter: brightness(1.1);
+}
+
+button:disabled {
+	opacity: 0.6;
+	cursor: not-allowed;
+}
+
+:focus-visible {
+	outline: 2px solid var(--accent);
+	outline-offset: 2px;
+}
+
+/* Tables scroll sideways inside their own box on a narrow screen */
+table {
+	display: block;
+	max-width: 100%;
+	overflow-x: auto;
+	border-collapse: collapse;
+}
+
+th,
+td {
+	padding: 0.5rem 0.75rem;
+	text-align: left;
+	white-space: nowrap;
+	border-bottom: 1px solid var(--border);
+}
+
+th {
+	background: var(--surface);
+}
+
+td.money {
+	text-align: right;
+	font-variant-numeric: tabular-nums;
+}
+
+/* Status region */
+[role="status"] {
+	min-height: 1.5rem;
+	margin: 0.5rem 0;
+	color: var(--muted);
+}
+
+[role="status"][data-kind="error"] {
+	color: var(--danger);
+}
+
+[role="status"][data-kind="success"] {
+	color: var(--success);
 }

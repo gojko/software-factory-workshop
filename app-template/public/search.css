@@ -1,0 +1,144 @@
+/* Rules that only the Search page needs. */
+
+form.search-form,
+form.booking-form {
+	margin: 1rem 0;
+}
+
+form.search-form button,
+form.booking-form button {
+	flex: 0 0 auto;
+}
+
+.booking-dialog {
+	box-sizing: border-box;
+	width: min(28rem, calc(100% - 2rem));
+	padding: 1rem 1.25rem;
+	background: var(--surface);
+	color: var(--text);
+	border: 1px solid var(--border);
+	border-radius: 0.5rem;
+}
+
+.booking-dialog::backdrop {
+	background: rgb(0 0 0 / 0.5);
+}
+
+.booking-dialog form.booking-form {
+	flex-direction: column;
+	flex-wrap: nowrap;
+	align-items: stretch;
+	gap: 1rem;
+	margin: 0;
+}
+
+.booking-dialog label {
+	flex: 0 0 auto;
+}
+
+.booking-dialog h2 {
+	margin: 0;
+	font-size: 1.25rem;
+}
+
+.dialog-actions {
+	display: flex;
+	justify-content: flex-end;
+	gap: 0.75rem;
+	margin-top: 0.5rem;
+}
+
+.booking-dialog button.cancel {
+	color: var(--text);
+	background: transparent;
+	border-color: var(--border);
+}
+
+.dialog-status {
+	min-height: 1.5rem;
+	margin: 0.5rem 0 0;
+}
+
+.results {
+	margin: 1rem 0;
+}
+
+.results .stay {
+	margin: 0 0 0.5rem;
+	color: var(--muted);
+}
+
+.results .empty {
+	margin: 0.5rem 0;
+	font-weight: 600;
+}
+
+.results table td:first-child {
+	font-weight: 600;
+}
+
+/* On a narrow screen every result row becomes a stacked block */
+@media (max-width: 39.99rem) {
+	.results table,
+	.results tbody {
+		display: block;
+		overflow: visible;
+	}
+
+	.results thead {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		overflow: hidden;
+		clip-path: inset(50%);
+	}
+
+	.results tr {
+		display: grid;
+		grid-template-columns: 1fr auto;
+		gap: 0.25rem 1rem;
+		margin: 0 0 0.75rem;
+		padding: 0.5rem 0.75rem;
+		background: var(--surface);
+		border: 1px solid var(--border);
+		border-radius: 0.3rem;
+	}
+
+	.results td {
+		display: contents;
+	}
+
+	.results td:first-child {
+		grid-column: 1 / -1;
+		display: block;
+		padding: 0;
+		border: 0;
+	}
+
+	.results td:nth-child(n + 2)::before {
+		padding: 0;
+		color: var(--muted);
+		font-weight: 400;
+	}
+
+	.results td:nth-child(2)::before { content: "Free rooms"; }
+	.results td:nth-child(3)::before { content: "Nights"; }
+	.results td:nth-child(4)::before { content: "Price per night"; }
+	.results td:nth-child(5)::before { content: "Total price"; }
+}
+
+.status {
+	min-height: 1.5rem;
+}
+
+.confirmation {
+	margin: 1rem 0;
+	padding: 0.75rem 1rem;
+	background: var(--surface);
+	border: 1px solid var(--success);
+	border-radius: 0.3rem;
+}
+
+.confirmation h2 {
+	font-size: 1.25rem;
+}

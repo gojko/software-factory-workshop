@@ -31,7 +31,7 @@ describe('the web app', () => {
 	});
 
 	test('returns the page script as JavaScript when the script is requested', async () => {
-		const response = await fetch(new URL('/app.js', underTest));
+		const response = await fetch(new URL('/dist/landing.js', underTest));
 
 		expect(response.status).toEqual(200);
 		expect(response.headers.get('content-type')).toEqual('text/javascript; charset=utf-8');
