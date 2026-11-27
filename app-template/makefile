@@ -7,8 +7,8 @@ PROJECT_TESTS := --selectProjects unit integration browser
 help: ## Show the targets and what each one does
 	@awk 'BEGIN { FS = ":.*## " } /^[a-zA-Z_-]+:.*## / { printf "  %-22s %s\n", $$1, $$2 }' $(MAKEFILE_LIST)
 
-init: ## Install the dependencies exactly as package-lock.json lists them; fails if it does not match package.json
-	npm ci
+init: ## Install the dependencies 
+	npm install
 
 build: ## Bundle the browser code of src/www/ into public/dist/
 	node src/www/build.js
