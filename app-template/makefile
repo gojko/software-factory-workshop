@@ -7,8 +7,9 @@ PROJECT_TESTS := --selectProjects unit integration browser
 help: ## Show the targets and what each one does
 	@awk 'BEGIN { FS = ":.*## " } /^[a-zA-Z_-]+:.*## / { printf "  %-22s %s\n", $$1, $$2 }' $(MAKEFILE_LIST)
 
-init: ## Install the dependencies 
+init: ## Install the dependencies and the ffmpeg that Playwright needs to record video
 	npm install
+	playwright-core install ffmpeg
 
 build: ## Bundle the browser code of src/www/ into public/dist/
 	node src/www/build.js

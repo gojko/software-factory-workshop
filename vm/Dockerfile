@@ -12,6 +12,7 @@ RUN ln -sf "$(command -v chromium || command -v chromium-browser)" /usr/local/bi
 ENV CHROME_PATH=/usr/local/bin/chromium \
   PUPPETEER_EXECUTABLE_PATH=/usr/local/bin/chromium \
   PUPPETEER_SKIP_DOWNLOAD=true \
-  PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
+  PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 \
+  PLAYWRIGHT_BROWSERS_PATH=0
 
 USER builder
